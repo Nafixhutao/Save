@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="description" content="Personal portfolio of Xue Zhen - Creative Designer and Developer">
   <title>Xue Zhen | Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-
+  
     .loader-wrapper {
       position: fixed;
       top: 0;
@@ -20,38 +20,78 @@
       justify-content: center;
       align-items: center;
       z-index: 9999;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
     }
     
-    .loader {
-      width: 80px;
-      height: 80px;
+    .loader-container {
       position: relative;
+      width: 150px;
+      height: 150px;
     }
     
-    .loader-circle {
+    .loader-logo {
       position: absolute;
       width: 100%;
       height: 100%;
-      border: 8px solid transparent;
-      border-top-color: #ff4d6d;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Fredoka One', sans-serif;
+      font-size: 24px;
+      color: #ff4d6d;
+      z-index: 2;
+    }
+    
+    .loader-spinner {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 8px solid rgba(255, 77, 109, 0.1);
       border-radius: 50%;
-      animation: spin 1.5s linear infinite;
-    }
-    
-    .loader-circle:nth-child(2) {
-      border: 8px solid transparent;
+      border-top-color: #ff4d6d;
       border-bottom-color: #ff4d6d;
-      animation: spin-reverse 1.5s linear infinite;
+      animation: spin 1.8s linear infinite;
     }
     
-    .loader-text {
-      margin-top: 20px;
+    .loader-spinner-inner {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      right: 15px;
+      bottom: 15px;
+      border: 8px solid rgba(255, 77, 109, 0.1);
+      border-radius: 50%;
+      border-left-color: #ff4d6d;
+      border-right-color: #ff4d6d;
+      animation: spin-reverse 2.2s linear infinite;
+    }
+    
+    .loader-progress {
+      position: absolute;
+      bottom: -40px;
+      width: 100%;
+      text-align: center;
       font-family: 'Poppins', sans-serif;
-      font-size: 18px;
+      font-size: 14px;
       color: #333;
-      letter-spacing: 2px;
-      animation: pulse 1.5s ease-in-out infinite;
+      letter-spacing: 1px;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 77, 109, 0.2);
+      margin-top: 10px;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: #ff4d6d;
+      border-radius: 2px;
+      transition: width 0.3s ease;
     }
     
     @keyframes spin {
@@ -64,16 +104,12 @@
       100% { transform: rotate(-360deg); }
     }
     
-    @keyframes pulse {
-      0%, 100% { opacity: 0.6; }
-      50% { opacity: 1; }
-    }
-    
     /* Main Content */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
     
     body {
@@ -85,7 +121,8 @@
       min-height: 100vh;
       padding: 20px;
       opacity: 0;
-      animation: fadeIn 0.5s ease-in-out forwards;
+      animation: fadeIn 0.8s ease-in-out forwards;
+      overflow-x: hidden;
     }
     
     @keyframes fadeIn {
@@ -95,37 +132,32 @@
     .card {
       background: white;
       border-radius: 30px;
-      width: 90%;
+      width: 95%;
       max-width: 1000px;
-      padding: 60px 40px 40px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+      padding: 60px 30px 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       position: relative;
       overflow: hidden;
-      transform: translateY(20px);
-      transition: transform 0.5s ease, box-shadow 0.3s ease;
-    }
-    
-    .card:hover {
-      transform: translateY(0);
-      box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+      margin: 20px 0;
     }
     
     .card .info {
       flex: 1;
-      min-width: 300px;
-      padding-right: 40px;
+      min-width: 100%;
+      padding-right: 0;
       z-index: 2;
+      order: 2;
     }
     
     .card h1 {
-      font-size: clamp(36px, 5vw, 60px);
+      font-size: clamp(32px, 7vw, 60px);
       color: #333;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       line-height: 1.1;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
     }
     
     .card h1 span {
@@ -147,12 +179,11 @@
     
     .card p {
       font-family: 'Poppins', sans-serif;
-      font-size: 16px;
+      font-size: clamp(14px, 3.5vw, 16px);
       font-weight: 400;
       color: #666;
-      margin-bottom: 30px;
-      line-height: 1.8;
-      max-width: 500px;
+      margin-bottom: 25px;
+      line-height: 1.7;
     }
     
     .card button {
@@ -161,13 +192,16 @@
       padding: 14px 28px;
       border: none;
       border-radius: 50px;
-      font-size: 16px;
+      font-size: clamp(14px, 3.5vw, 16px);
       cursor: pointer;
       transition: all 0.3s ease;
       font-family: 'Fredoka One', sans-serif;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
       position: relative;
       overflow: hidden;
+      display: block;
+      width: fit-content;
+      margin: 0 auto;
     }
     
     .card button::before {
@@ -184,7 +218,7 @@
     .card button:hover {
       background: #ff3355;
       transform: translateY(-3px);
-      box-shadow: 0 10px 20px rgba(255, 77, 109, 0.3);
+      box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
     }
     
     .card button:hover::before {
@@ -193,32 +227,29 @@
     
     .card .image {
       flex: 1;
-      min-width: 300px;
+      min-width: 100%;
       text-align: center;
       z-index: 1;
       position: relative;
+      order: 1;
+      margin-bottom: 30px;
     }
     
     .card .image img {
-      max-height: 450px;
+      max-height: 350px;
       width: 100%;
-      max-width: 450px;
+      max-width: 350px;
       height: auto;
       border-radius: 20px;
       object-fit: cover;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-      transition: transform 0.5s ease;
-    }
-    
-    .card .image:hover img {
-      transform: scale(1.03);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
     
     .nav {
       position: absolute;
-      top: 30px;
-      left: 40px;
-      right: 40px;
+      top: 20px;
+      left: 20px;
+      right: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -228,13 +259,13 @@
     .nav ul {
       list-style: none;
       display: flex;
-      gap: 30px;
+      gap: 15px;
     }
     
     .nav ul li a {
       text-decoration: none;
       color: #555;
-      font-size: 15px;
+      font-size: clamp(12px, 3vw, 15px);
       font-weight: 600;
       transition: color 0.3s ease;
       position: relative;
@@ -261,10 +292,65 @@
     }
     
     .logo {
-      font-size: 22px;
+      font-size: clamp(18px, 4vw, 22px);
       color: #ff4d6d;
       font-weight: bold;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
+    }
+    
+    /* Mobile Menu */
+    .menu-toggle {
+      display: none;
+      width: 30px;
+      height: 20px;
+      position: relative;
+      cursor: pointer;
+      z-index: 4;
+    }
+    
+    .menu-toggle span {
+      display: block;
+      position: absolute;
+      height: 3px;
+      width: 100%;
+      background: #ff4d6d;
+      border-radius: 3px;
+      opacity: 1;
+      left: 0;
+      transform: rotate(0deg);
+      transition: .25s ease-in-out;
+    }
+    
+    .menu-toggle span:nth-child(1) {
+      top: 0px;
+    }
+    
+    .menu-toggle span:nth-child(2), .menu-toggle span:nth-child(3) {
+      top: 10px;
+    }
+    
+    .menu-toggle span:nth-child(4) {
+      top: 20px;
+    }
+    
+    .menu-toggle.open span:nth-child(1) {
+      top: 10px;
+      width: 0%;
+      left: 50%;
+    }
+    
+    .menu-toggle.open span:nth-child(2) {
+      transform: rotate(45deg);
+    }
+    
+    .menu-toggle.open span:nth-child(3) {
+      transform: rotate(-45deg);
+    }
+    
+    .menu-toggle.open span:nth-child(4) {
+      top: 10px;
+      width: 0%;
+      left: 50%;
     }
     
     /* Decorative elements */
@@ -272,90 +358,106 @@
       position: absolute;
       border-radius: 50%;
       background: rgba(255, 77, 109, 0.1);
-      filter: blur(20px);
+      filter: blur(15px);
     }
     
     .circle-1 {
-      width: 300px;
-      height: 300px;
-      top: -100px;
-      right: -100px;
+      width: 200px;
+      height: 200px;
+      top: -50px;
+      right: -50px;
       animation: float 6s ease-in-out infinite;
     }
     
     .circle-2 {
-      width: 200px;
-      height: 200px;
-      bottom: -50px;
-      left: -50px;
+      width: 150px;
+      height: 150px;
+      bottom: -30px;
+      left: -30px;
       animation: float 8s ease-in-out infinite;
     }
     
     @keyframes float {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
+      50% { transform: translateY(-15px); }
     }
     
-   
-    .particles {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      overflow: hidden;
-    }
-    
-    .particle {
-      position: absolute;
-      background: rgba(255, 77, 109, 0.3);
-      border-radius: 50%;
-      animation: float-particle 15s linear infinite;
-    }
-    
-    @keyframes float-particle {
-      0% { 
-        transform: translateY(0) translateX(0);
-        opacity: 0;
-      }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { 
-        transform: translateY(-100vh) translateX(100px);
-        opacity: 0;
-      }
-    }
-    
-    /* Responsive */
-    @media (max-width: 768px) {
+    /* Responsive Adjustments */
+    @media (min-width: 576px) {
       .card {
-        padding: 50px 20px 30px;
-        text-align: center;
-      }
-      
-      .card .info {
-        padding-right: 0;
-        margin-bottom: 40px;
-      }
-      
-      .card p {
-        margin-left: auto;
-        margin-right: auto;
+        padding: 60px 40px 40px;
       }
       
       .nav {
-        left: 20px;
-        right: 20px;
-        top: 20px;
+        left: 30px;
+        right: 30px;
       }
       
-      .nav ul {
-        gap: 15px;
+      .card .info {
+        min-width: 50%;
+        padding-right: 20px;
+        order: 1;
+      }
+      
+      .card .image {
+        min-width: 50%;
+        order: 2;
+        margin-bottom: 0;
       }
       
       .card button {
-        margin: 0 auto;
+        margin: 0;
+      }
+    }
+    
+    @media (min-width: 768px) {
+      .card {
+        padding: 70px 50px 50px;
+      }
+      
+      .nav {
+        left: 40px;
+        right: 40px;
+        top: 30px;
+      }
+      
+      .nav ul {
+        gap: 25px;
+      }
+      
+      .card .info {
+        padding-right: 40px;
+      }
+      
+      .card .image img {
+        max-height: 400px;
+        max-width: 400px;
+      }
+    }
+    
+    @media (max-width: 575px) {
+      .nav ul {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        transition: right 0.3s ease;
+        z-index: 3;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+      }
+      
+      .nav ul.active {
+        right: 0;
+      }
+      
+      .menu-toggle {
+        display: block;
       }
       
       .circle-1, .circle-2 {
@@ -365,24 +467,35 @@
   </style>
 </head>
 <body>
-
+ 
   <div class="loader-wrapper" id="loader">
-    <div class="loader">
-      <div class="loader-circle"></div>
-      <div class="loader-circle"></div>
+    <div class="loader-container">
+      <div class="loader-spinner"></div>
+      <div class="loader-spinner-inner"></div>
+      <div class="loader-logo">ZHEN</div>
     </div>
-    <div class="loader-text">LOADING</div>
+    <div class="loader-progress">
+      <span id="progress-text">0%</span>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
   </div>
   
-  
+
   <div class="card">
-    <div class="particles" id="particles"></div>
     <div class="circle circle-1"></div>
     <div class="circle circle-2"></div>
     
     <div class="nav">
       <div class="logo">ZHEN</div>
-      <ul>
+      <div class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul id="nav-menu">
         <li><a href="#">HOME</a></li>
         <li><a href="#">WORK</a></li>
         <li><a href="#">ABOUT</a></li>
@@ -402,36 +515,49 @@
   </div>
 
   <script>
- 
-    window.addEventListener('load', function() {
-      setTimeout(function() {
-        const loader = document.getElementById('loader');
-        loader.style.opacity = '0';
-        setTimeout(() => loader.style.display = 'none', 500);
-        
+  
+    let progress = 0;
+    const progressText = document.getElementById('progress-text');
+    const progressFill = document.getElementById('progress-fill');
+    const loader = document.getElementById('loader');
+    
+
+    const progressInterval = setInterval(() => {
+      progress += Math.floor(Math.random() * 5) + 1;
+      if (progress > 100) progress = 100;
       
-        const particlesContainer = document.getElementById('particles');
-        const particleCount = 15;
-        
-        for (let i = 0; i < particleCount; i++) {
-          const particle = document.createElement('div');
-          particle.classList.add('particle');
-        
-          const size = Math.random() * 10 + 5;
-          const posX = Math.random() * 100;
-          const delay = Math.random() * 15;
-          const duration = Math.random() * 10 + 10;
-          
-          particle.style.width = `${size}px`;
-          particle.style.height = `${size}px`;
-          particle.style.left = `${posX}%`;
-          particle.style.bottom = `-${size}px`;
-          particle.style.animationDelay = `${delay}s`;
-          particle.style.animationDuration = `${duration}s`;
-          
-          particlesContainer.appendChild(particle);
-        }
-      }, 1500); 
+      progressText.textContent = `${progress}%`;
+      progressFill.style.width = `${progress}%`;
+      
+      if (progress === 100) {
+        clearInterval(progressInterval);
+        setTimeout(() => {
+          loader.style.opacity = '0';
+          loader.style.visibility = 'hidden';
+        }, 500);
+      }
+    }, 50);
+    
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('open');
+      navMenu.classList.toggle('active');
+    });
+    
+
+    document.querySelectorAll('#nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('open');
+        navMenu.classList.remove('active');
+      });
+    });
+    
+  
+    menuToggle.addEventListener('click', function() {
+      document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
     });
   </script>
 </body>
